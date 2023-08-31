@@ -1,9 +1,12 @@
-import Header from "./component/Header";
 import styled from "styled-components";
+import Header from "./component/Header";
+import { Outlet } from "react-router-dom";
+
 function Layout() {
   return (
     <MainContainer>
       <Header />
+      <Outlet />
     </MainContainer>
   );
 }
