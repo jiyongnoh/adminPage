@@ -20,3 +20,45 @@ export const loginAPI = async (url, post) => {
     throw err;
   }
 };
+
+export const dupleCheckAPI = async (url, post) => {
+  console.log(url, post);
+  try {
+    const res = await fetch(`${url}/signup/duplecheck`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .catch((err) => {
+        throw err;
+      });
+    console.log(res);
+    return res.data === "Success" ? true : false;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const signupAPI = async (url, post) => {
+  console.log(url, post);
+  try {
+    const res = await fetch(`${url}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .catch((err) => {
+        throw err;
+      });
+    console.log(res);
+    return res.data === "Success" ? true : false;
+  } catch (err) {
+    throw err;
+  }
+};

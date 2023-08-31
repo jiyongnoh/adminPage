@@ -9,6 +9,9 @@ function Header() {
       <Link to="/login">
         <HeaderElement>Login</HeaderElement>
       </Link>
+      <Link to="/signup">
+        <HeaderElement>Sign Up</HeaderElement>
+      </Link>
       <Link to="/info">
         <HeaderElement>Info</HeaderElement>
       </Link>

@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { loginAPI } from "../api";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
+
   const idInput = useRef();
   const pwdInput = useRef();
+
+  const navigate = useNavigate();
 
   //   useEffect(() => {
   //     console.log(id);
@@ -30,8 +34,10 @@ function Login() {
       pwd,
     });
 
-    if (flag) alert("성공");
-    else alert("실패");
+    if (flag) {
+      alert("Login 성공");
+      navigate("/info");
+    } else alert("Login 실패");
   };
 
   return (
@@ -55,7 +61,13 @@ function Login() {
         />
         <ButtonContainer>
           <Button onClick={loginHandler}>Login</Button>
-          <Button>Sign Up</Button>
+          <Button
+            onClick={() => {
+              navigate("/signup");
+            }}
+          >
+            Sign Up
+          </Button>
         </ButtonContainer>
       </FormContainer>
     </LoginContainer>
