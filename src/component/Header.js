@@ -1,21 +1,43 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { log } from "../store/store";
+
 function Header() {
+  const [login, setLogin] = useRecoilState(log);
+
   return (
-    <HeaderContainer>
-      <Link to="/">
-        <HeaderElement>Main</HeaderElement>
-      </Link>
-      <Link to="/login">
-        <HeaderElement>Login</HeaderElement>
-      </Link>
-      <Link to="/signup">
-        <HeaderElement>Sign Up</HeaderElement>
-      </Link>
-      <Link to="/info">
-        <HeaderElement>Info</HeaderElement>
-      </Link>
-    </HeaderContainer>
+    <>
+      {login ? (
+        <HeaderContainer>
+          <Link to="/">
+            <HeaderElement>Main</HeaderElement>
+          </Link>
+          <HeaderElement
+            onClick={() => {
+              setLogin(false);
+            }}
+          >
+            로그아웃
+          </HeaderElement>
+          <Link to="/info">
+            <HeaderElement>Info</HeaderElement>
+          </Link>
+        </HeaderContainer>
+      ) : (
+        <HeaderContainer>
+          <Link to="/">
+            <HeaderElement>Main</HeaderElement>
+          </Link>
+          <Link to="/login">
+            <HeaderElement>Login</HeaderElement>
+          </Link>
+          <Link to="/signup">
+            <HeaderElement>Sign Up</HeaderElement>
+          </Link>
+        </HeaderContainer>
+      )}
+    </>
   );
 }
 
@@ -32,10 +54,8 @@ const HeaderContainer = styled.div`
   border: 1px solid blue;
 `;
 
-const HeaderElement = styled.div`
+const HeaderElement = styled.button`
   padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: 1px solid orange;
+  cursor: pointer;
 `;

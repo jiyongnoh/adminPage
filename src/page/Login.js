@@ -2,19 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { loginAPI } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { log } from "../store/store";
 
 function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
+  const [login, setLogin] = useRecoilState(log);
 
   const idInput = useRef();
   const pwdInput = useRef();
 
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     console.log(id);
-  //   }, [id]);
+  // useEffect(() => {
+  //   console.log(login);
+  // }, [login]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -36,6 +39,7 @@ function Login() {
 
     if (flag) {
       alert("Login 성공");
+      setLogin(true);
       navigate("/info");
     } else alert("Login 실패");
   };

@@ -168,6 +168,14 @@ function SignUp() {
         </InputContainer>
         <ButtonContainer>
           <Button onClick={signupHandler}>Sign Up</Button>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            Cancel
+          </Button>
         </ButtonContainer>
       </FormContainer>
     </SignUpContainer>
