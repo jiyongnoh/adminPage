@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { log } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [login, setLogin] = useRecoilState(log);
-
+  const navigate = useNavigate();
   return (
     <>
       {login ? (
@@ -16,6 +17,7 @@ function Header() {
           <HeaderElement
             onClick={() => {
               setLogin(false);
+              navigate("/");
             }}
           >
             로그아웃
