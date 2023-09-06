@@ -37,7 +37,7 @@ function SignUp() {
       return;
     }
 
-    const flag = await dupleCheckAPI("http://localhost:4000", {
+    const flag = await dupleCheckAPI("http://43.201.75.68:4000", {
       id,
       type,
       vrNum,
@@ -85,7 +85,7 @@ function SignUp() {
       return;
     }
 
-    const flag = await signupAPI("http://localhost:4000", {
+    const flag = await signupAPI("http://43.201.75.68:4000", {
       id,
       pwd,
       // name,
