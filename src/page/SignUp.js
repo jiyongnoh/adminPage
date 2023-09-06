@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 function SignUp() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [email, setEmail] = useState("");
+  // const [name, setName] = useState("");
+  // const [age, setAge] = useState(0);
+  // const [email, setEmail] = useState("");
   const [vrNum, setVrNum] = useState("");
 
   const [duple, setDuple] = useState(false);
@@ -22,22 +22,33 @@ function SignUp() {
 
   const checkHandler = async (e) => {
     e.preventDefault();
-    if (!id) {
-      alert("ID를 입력하세요");
+
+    const type = e.target.name === "id" ? "id" : "vr";
+
+    if (type === "id" && !id) {
+      alert(`ID를 입력하세요`);
       idInput.current.focus();
       return;
     }
 
-    const flag = await dupleCheckAPI("http://43.201.75.68:4000", {
+    if (type === "vr" && !vrNum) {
+      alert(`VR Number를 입력하세요`);
+      idInput.current.focus();
+      return;
+    }
+
+    const flag = await dupleCheckAPI("http://localhost:4000", {
       id,
+      type,
+      vrNum,
     });
 
     if (flag) {
-      alert("사용 가능한 ID 입니다");
+      alert(`사용 가능한 ${type === "id" ? "ID" : "VR Number"} 입니다`);
       setDuple(true);
       setCheckMsg("");
     } else {
-      alert("중복된 ID 입니다");
+      alert(`중복된 ${type === "id" ? "ID" : "VR Number"} 입니다`);
       idInput.current.focus();
       setCheckMsg("사용 불가");
       setDuple(false);
@@ -74,12 +85,12 @@ function SignUp() {
       return;
     }
 
-    const flag = await signupAPI("http://43.201.75.68:4000", {
+    const flag = await signupAPI("http://localhost:4000", {
       id,
       pwd,
-      name,
-      age,
-      email,
+      // name,
+      // age,
+      // email,
       vrNum,
     });
 
@@ -99,7 +110,7 @@ function SignUp() {
     <SignUpContainer>
       <h1>Sign Up</h1>
       <FormContainer>
-        <InputContainer>
+        {/* <InputContainer>
           <h3>개인 정보</h3>
           <Input
             placeholder="Name"
@@ -127,7 +138,7 @@ function SignUp() {
               setEmail(e.target.value);
             }}
           />
-        </InputContainer>
+        </InputContainer> */}
         <InputContainer>
           <h3>*계정 정보</h3>
           <IdContainer>
@@ -138,8 +149,9 @@ function SignUp() {
                 setId(e.target.value);
               }}
             />
-            <MsgSpan>{checkMsg}</MsgSpan>
-            <CheckButton onClick={checkHandler}>중복확인</CheckButton>
+            <CheckButton name="id" onClick={checkHandler}>
+              중복 확인
+            </CheckButton>
           </IdContainer>
           <Input
             ref={pwdInput}
@@ -157,6 +169,9 @@ function SignUp() {
                 setVrNum(e.target.value);
               }}
             />
+            <CheckButton name="vr" onClick={checkHandler}>
+              중복 확인
+            </CheckButton>
             <a
               href="https://www.meta.com/ko-kr/help/orders-and-returns/articles/find-serial-number/"
               target="_blank"
@@ -164,6 +179,7 @@ function SignUp() {
             >
               VR 번호란?
             </a>
+            <MsgSpan>{checkMsg}</MsgSpan>
           </IdContainer>
         </InputContainer>
         <ButtonContainer>
