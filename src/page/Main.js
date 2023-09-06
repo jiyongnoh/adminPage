@@ -4,9 +4,9 @@ function Main() {
   return (
     <MainContainer>
       <h1>Main Page</h1>
-      <h2>Soyes Tips</h2>
-      <h3>Administor</h3>
-      <h4>Page</h4>
+      <h1>Soyes Tips</h1>
+      <h1>Administor</h1>
+      <h1>Page</h1>
     </MainContainer>
   );
 }

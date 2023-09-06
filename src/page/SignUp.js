@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { dupleCheckAPI, signupAPI } from "../api";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 function SignUp() {
   const [id, setId] = useState("");
@@ -20,19 +23,21 @@ function SignUp() {
 
   const navigate = useNavigate();
 
+  // const notify = () => toast("Login 성공!");
+
   const checkHandler = async (e) => {
     e.preventDefault();
 
     const type = e.target.name === "id" ? "id" : "vr";
 
     if (type === "id" && !id) {
-      alert(`ID를 입력하세요`);
+      toast.error("ID를 입력하세요");
       idInput.current.focus();
       return;
     }
 
     if (type === "vr" && !vrNum) {
-      alert(`VR Number를 입력하세요`);
+      toast.error(`VR Number를 입력하세요`);
       idInput.current.focus();
       return;
     }
@@ -44,11 +49,11 @@ function SignUp() {
     });
 
     if (flag) {
-      alert(`사용 가능한 ${type === "id" ? "ID" : "VR Number"} 입니다`);
+      toast.success(`사용 가능한 ${type === "id" ? "ID" : "VR Number"} 입니다`);
       setDuple(true);
       setCheckMsg("");
     } else {
-      alert(`중복된 ${type === "id" ? "ID" : "VR Number"} 입니다`);
+      toast.error(`중복된 ${type === "id" ? "ID" : "VR Number"} 입니다`);
       idInput.current.focus();
       setCheckMsg("사용 불가");
       setDuple(false);
@@ -58,29 +63,29 @@ function SignUp() {
   const signupHandler = async (e) => {
     e.preventDefault();
     if (!id) {
-      alert("ID를 입력하세요");
+      toast.error("ID를 입력하세요");
       idInput.current.focus();
       return;
     }
 
     if (!duple && checkMsg === "사용 불가") {
-      alert("중복된 ID 입니다");
+      toast.error("중복된 ID 입니다");
       idInput.current.focus();
       return;
     } else if (!duple) {
-      alert("중복 검사를 해주세요");
+      toast.error("중복 검사를 해주세요");
       idInput.current.focus();
       return;
     }
 
     if (!pwd) {
-      alert("Password를 입력하세요");
+      toast.error("Password를 입력하세요");
       idInput.current.focus();
       return;
     }
 
     if (!vrNum) {
-      alert("VR Number를 입력하세요");
+      toast.error("VR Number를 입력하세요");
       vrInput.current.focus();
       return;
     }
@@ -95,10 +100,18 @@ function SignUp() {
     });
 
     if (flag) {
-      alert("회원가입 성공!");
+      Swal.fire({
+        icon: "success",
+        title: "회원가입 성공!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       navigate("/login");
     } else {
-      alert("회원가입 실패!");
+      Swal.fire({
+        icon: "error",
+        title: "회원가입 실패ㅠ",
+      });
     }
   };
 
@@ -109,6 +122,17 @@ function SignUp() {
   return (
     <SignUpContainer>
       <h1>Sign Up</h1>
+      <ToastContainer
+        position="top-right" // 알람 위치 지정
+        autoClose={1500} // 자동 off 시간
+        hideProgressBar={false} // 진행시간바 숨김
+        closeOnClick // 클릭으로 알람 닫기
+        rtl={false} // 알림 좌우 반전
+        pauseOnFocusLoss // 화면을 벗어나면 알람 정지
+        draggable // 드래그 가능
+        pauseOnHover // 마우스를 올리면 알람 정지
+        theme="light"
+      />
       <FormContainer>
         {/* <InputContainer>
           <h3>개인 정보</h3>

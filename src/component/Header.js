@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { log } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Header() {
   const [login, setLogin] = useRecoilState(log);
@@ -16,11 +17,27 @@ function Header() {
           </Link>
           <HeaderElement
             onClick={() => {
-              setLogin(false);
-              navigate("/");
+              Swal.fire({
+                title: "Do you want to LogOut?",
+                showDenyButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `No`,
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "LogOut!",
+                    showConfirmButton: false,
+                    timer: 1000,
+                  }).then(() => {
+                    setLogin(false);
+                    navigate("/");
+                  });
+                }
+              });
             }}
           >
-            로그아웃
+            LogOut
           </HeaderElement>
           <Link to="/info">
             <HeaderElement>Info</HeaderElement>

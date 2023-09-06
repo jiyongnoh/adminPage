@@ -4,6 +4,7 @@ import { loginAPI } from "../api";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { log } from "../store/store";
+import Swal from "sweetalert2";
 
 function Login() {
   const [id, setId] = useState("");
@@ -38,10 +39,20 @@ function Login() {
     });
 
     if (flag) {
-      alert("Login 성공");
-      setLogin(true);
-      navigate("/info");
-    } else alert("Login 실패");
+      Swal.fire({
+        icon: "success",
+        title: "Login Success!",
+        showConfirmButton: false,
+        timer: 1000,
+      }).then(() => {
+        setLogin(true);
+        navigate("/info");
+      });
+    } else
+      Swal.fire({
+        icon: "error",
+        title: "Login Fail...",
+      });
   };
 
   return (
