@@ -47,7 +47,7 @@ function Login() {
         timer: 1000,
       }).then(async () => {
         setLogin(true);
-        const data = await vrNumAPI("http://localhost:4000", {
+        const data = await vrNumAPI("http://43.201.75.68:4000", {
           teacher_uid: id,
         });
         console.log(data);

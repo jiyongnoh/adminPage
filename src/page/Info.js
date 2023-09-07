@@ -10,7 +10,7 @@ function Info() {
 
   useEffect(() => {
     if (vrNumber) {
-      infoAPI("http://localhost:4000", { vrNum: vrNumber }).then((data) => {
+      infoAPI("http://43.201.75.68:4000", { vrNum: vrNumber }).then((data) => {
         if (data) setUsers([...data]);
       });
     }
