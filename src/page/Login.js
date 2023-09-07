@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { loginAPI } from "../api";
+import { loginAPI, vrNumAPI } from "../api";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { log } from "../store/store";
+import { log, vrNum } from "../store/store";
 import Swal from "sweetalert2";
 
 function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [login, setLogin] = useRecoilState(log);
+  const [vrNumber, setVrNumber] = useRecoilState(vrNum);
 
   const idInput = useRef();
   const pwdInput = useRef();
@@ -44,8 +45,13 @@ function Login() {
         title: "Login Success!",
         showConfirmButton: false,
         timer: 1000,
-      }).then(() => {
+      }).then(async () => {
         setLogin(true);
+        const data = await vrNumAPI("http://localhost:4000", {
+          teacher_uid: id,
+        });
+        console.log(data);
+        setVrNumber(data);
         navigate("/info");
       });
     } else
